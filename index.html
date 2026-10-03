@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Our Little Date ❤️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #050505;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.card {
+    width: 100%;
+    max-width: 450px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 25px;
+    padding: 35px 25px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(255,255,255,0.08);
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+p {
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.heart {
+    font-size: 55px;
+    animation: pulse 1.5s infinite;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.yes {
+    background: white;
+    color: black;
+}
+
+.no {
+    background: #222;
+    color: white;
+    border: 1px solid #444;
+}
+
+.back {
+    background: #333;
+    color: white;
+}
+
+.option {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 13px;
+    background: #1b1b1b;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.option.selected {
+    background: white;
+    color: black;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    border-radius: 12px;
+    border: 1px solid #444;
+    background: #1b1b1b;
+    color: white;
+    font-size: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<!-- STEP 1 -->
+<div id="step1">
+    <div class="heart">❤️</div>
+
+    <h1>One Little Question</h1>
+
+    <p>
+        Would you like to go on a date with me? ☕❤️
+    </p>
+
+    <button class="yes" onclick="showConfirm()">
+        YES ❤️
+    </button>
+
+    <button class="no" onclick="showSad()">
+        NO
+    </button>
+</div>
+
+
+<!-- CONFIRM -->
+<div id="confirm" class="hidden">
+
+    <div class="heart">🥹❤️</div>
+
+    <h1>Are you really sure?</h1>
+
+    <p>
+        You really said YES? 😳❤️
+    </p>
+
+    <button class="yes" onclick="startDate()">
+        Yes, I'm sure ❤️
+    </button>
+
+    <button class="back" onclick="goBack()">
+        Back
+    </button>
+
+</div>
+
+
+<!-- SAD -->
+<div id="sad" class="hidden">
+
+    <div class="heart">🥺</div>
+
+    <h1>Oh... okay 🥺</h1>
+
+    <p>
+        That's a little sad... 💔<br>
+        But I'll respect your answer.
+    </p>
+
+    <p>
+        Maybe you could think about it one more time? ❤️
+    </p>
+
+    <button class="yes" onclick="goBack()">
+        Back ❤️
+    </button>
+
+</div>
+
+
+<!-- DATE DETAILS -->
+<div id="dateForm" class="hidden">
+
+    <h1>Let's Plan Our Date ❤️</h1>
+
+    <p>Choose a date:</p>
+
+    <input type="date" id="date">
+
+    <p>Choose a time:</p>
+
+    <input type="time" id="time">
+
+    <p>Choose a place:</p>
+
+    <input
+        type="text"
+        id="place"
+        placeholder="Coffee shop, restaurant..."
+    >
+
+    <p>Choose something to eat 🍕</p>
+
+    <button class="option" onclick="selectFood(this,'Pizza')">
+        🍕 Pizza
+    </button>
+
+    <button class="option" onclick="selectFood(this,'Fried Rice')">
+        🍚 Fried Rice
+    </button>
+
+    <button class="option" onclick="selectFood(this,'Nasi Goreng')">
+        🍳 Nasi Goreng
+    </button>
+
+    <button class="option" onclick="selectFood(this,'Noodles')">
+        🍜 Noodles
+    </button>
+
+    <button class="option" onclick="selectFood(this,'Other')">
+        🍽️ Other
+    </button>
+
+    <button class="yes" onclick="sendWhatsApp()">
+        Send to WhatsApp 💚
+    </button>
+
+</div>
+
+</div>
+
+
+<script>
+
+let selectedFood = "";
+
+function hideAll() {
+    document.getElementById("step1").classList.add("hidden");
+    document.getElementById("confirm").classList.add("hidden");
+    document.getElementById("sad").classList.add("hidden");
+    document.getElementById("dateForm").classList.add("hidden");
+}
+
+function showConfirm() {
+    hideAll();
+    document.getElementById("confirm").classList.remove("hidden");
+}
+
+function showSad() {
+    hideAll();
+    document.getElementById("sad").classList.remove("hidden");
+}
+
+function goBack() {
+    hideAll();
+    document.getElementById("step1").classList.remove("hidden");
+}
+
+function startDate() {
+    hideAll();
+    document.getElementById("dateForm").classList.remove("hidden");
+}
+
+function selectFood(button, food) {
+
+    document.querySelectorAll(".option").forEach(function(btn) {
+        btn.classList.remove("selected");
+    });
+
+    button.classList.add("selected");
+
+    selectedFood = food;
+}
+
+function sendWhatsApp() {
+
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
+    const place = document.getElementById("place").value;
+
+    if (!date || !time || !place || !selectedFood) {
+        alert("Please choose the date, time, place and food ❤️");
+        return;
+    }
+
+    const message =
+`❤️ OUR DATE ❤️
+
+She said YES! 🥹❤️
+
+📅 Date: ${date}
+⏰ Time: ${time}
+📍 Place: ${place}
+🍽️ Food: ${selectedFood}
+
+See you there ❤️`;
+
+    /*
+       IMPORTANT:
+       Replace 947XXXXXXXXX with your WhatsApp number.
+       Example:
+       94771234567
+    */
+
+    const phone = "947XXXXXXXXX";
+
+    const whatsappURL =
+        "https://wa.me/" +
+        phone +
+        "?text=" +
+        encodeURIComponent(message);
+
+    window.open(whatsappURL, "_blank");
+}
+
+</script>
+
+</body>
+</html>
